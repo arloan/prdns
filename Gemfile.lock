@@ -1,0 +1,32 @@
+PATH
+  remote: .
+  specs:
+    prdns (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    async (1.24.2)
+      console (~> 1.0)
+      nio4r (~> 2.3)
+      timers (~> 4.1)
+    async-dns (1.2.5)
+      async-io (~> 1.15)
+    async-io (1.27.3)
+      async (~> 1.14)
+    console (1.8.2)
+    nio4r (2.5.2)
+    rake (10.5.0)
+    timers (4.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  async-dns
+  bundler (~> 1.16)
+  prdns!
+  rake (~> 10.0)
+
+BUNDLED WITH
+   1.16.2

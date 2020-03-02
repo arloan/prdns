@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require 'time'
+require 'optparse'
+require "prdns"
+
+IPV4 = '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+IPV6_PURE = '\[(?:[a-z0-9]{1,4})?(?::(?:[a-z0-9]{1,4})?){2,7}\]'
+IPV6_MIX = '\[(?:[a-z0-9]{1,4})?(?::(?:[a-z0-9]{1,4})?){3,6}\.\d{1,3}\.\d{1,3}\.\d{1,3}\]'
+def parse_commandline
+  opt = Hash.new
+  OptionParser.new do |o|
+    o.banner = 'Usage: %s [options]' % File.basename($0)
+    o.on('-l', '--listen LISTEN',
+         'Listen in given way to server DNS query. Should be specified as [proto://]ip[:port], ' +
+             'where <proto> should be "udp" or "tcp", and "udp" is used if "proto://" part not present. ' +
+             '<port> will be 53 if not specified. ' +
+             'When no "-l" supplied, udp://localhost:5353 is used.' +
+             'Multiple "-l" options are accepted.') do |dns|
+      opt[:listen] ||= []
+      opt[:listen] << validate_dns_uri(dns)
+    end
+    o.on('-p', '--polluted-dns DNS',
+         'Specify a DNS server inside GFW, which SHOULD respond polluted result on black-listed domains. ' +
+             'This DNS server is used for querying China CDN enabled domains and un-polluted domains.' +
+             'The address format is the same as "-l" option above. ' +
+             'Multiple "-p" options are accepted, when no "-p" supplied, "udp://114.114.114.114:53" is used.') do |dns|
+      opt[:pdns] ||= []
+      opt[:pdns] << validate_dns_uri(dns)
+    end
+    o.on('-a', '--authentic-dns DNS',
+         'Specify a trustable DNS server, which SHOULD respond real result on querying polluted domains. ' +
+             'The address format is the same as "-l" option above. ' +
+             'Multiple "-p" options are accepted, when no "-p" supplied, "udp://208.67.220.220:5353" is used.') do |dns|
+      opt[:adns] ||= []
+      opt[:adns] << validate_dns_uri(dns)
+    end
+
+    o.on('-h', '--help', 'Print this help message.') do
+      puts o
+      exit 255
+    end
+  end.parse!
+  opt
+end
+
+def validate_dns_uri(uri)
+  raise Prdns::UsageError, 'Invalid format of listen option.' unless
+      uri =~ /^(?:(udp|tcp):\/\/)?(localhost|#{IPV4}|#{IPV6_PURE}|#{IPV6_MIX})(?::(\d{1,5}))?$/i
+  protocol, ip, port = ($1 || 'udp').downcase.to_sym, $2.downcase, $3.to_i
+  ip = $1 if ip =~ /\[(.+)\]/
+  port = 53 if port == 0
+  [protocol, ip, port]
+end
+
+def main
+  opt = parse_commandline
+  server = Prdns::PurifiedServer.new(opt[:listen] || [[:udp, 'localhost', 5353]])
+  server.setup
+  server.run
+  exit 0
+rescue
+  puts '%s: %s' % [ $!.is_a?(Prdns::UsageError) ? 'USAGE' : $!.class.name, $!.message]
+  puts $@.join("\n") unless $!.is_a?(Prdns::AppError)
+  exit 1
+end
+
+main if File.basename($0) == File.basename(__FILE__)

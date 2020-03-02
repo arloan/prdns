@@ -16,7 +16,7 @@ GEM
       async (~> 1.14)
     console (1.8.2)
     nio4r (2.5.2)
-    rake (10.5.0)
+    rake (13.0.1)
     timers (4.3.0)
 
 PLATFORMS
@@ -26,7 +26,7 @@ DEPENDENCIES
   async-dns
   bundler (~> 1.16)
   prdns!
-  rake (~> 10.0)
+  rake (~> 13.0)
 
 BUNDLED WITH
    1.16.2

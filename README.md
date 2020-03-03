@@ -2,6 +2,8 @@
 
 A DNS forward server offers correct results for both GFW polluted domains and CDN-enabled domains in China.
 
+It does **NOT** rely on any domain/ip database (e.g. GFWlist, GeoIP etc), maintenance free, highly reliable.
+
 ## Installation
 
 With ruby >= 2.4.2 installed on your system, run the command below in your terminal(*nix) or CMD box:

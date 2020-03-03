@@ -1,6 +1,6 @@
 # Purified DNS
 
-A DNS forward server offers offers correct results for both GFW polluted domains and CDN-enabled domains in China.
+A DNS forward server offers correct results for both GFW polluted domains and CDN-enabled domains in China.
 
 ## Installation
 

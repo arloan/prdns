@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     prdns (0.1.0)
+      async-dns (~> 1.2)
 
 GEM
   remote: https://rubygems.org/

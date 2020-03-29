@@ -2,7 +2,7 @@
 
 require 'time'
 require 'optparse'
-require "prdns"
+require_relative "../lib/prdns"
 
 IPV4 = '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 IPV6_PURE = '\[(?:[a-z0-9]{1,4})?(?::(?:[a-z0-9]{1,4})?){2,7}\]'
@@ -56,7 +56,7 @@ end
 def main
   opt = parse_commandline
   server = Prdns::PurifiedServer.new(opt[:listen] || [[:udp, 'localhost', 5353]])
-  server.setup
+  server.setup(polluted: opt[:pdns], authentic: opt[:adns])
   server.run
   exit 0
 rescue

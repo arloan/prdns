@@ -21,7 +21,7 @@ def parse_commandline
       opt[:listen] << validate_dns_uri(dns)
     end
     o.on('-p', '--polluted-dns DNS',
-         'Specify a DNS server inside GFW, which SHOULD respond polluted result on black-listed domains. ' +
+         'Specify a DNS server inside GFW, which SHOULD respond with polluted result on black-listed domains. ' +
              'This DNS server is used for querying China CDN enabled domains and un-polluted domains.' +
              'The address format is the same as "-l" option above. ' +
              'Multiple "-p" options are accepted, when no "-p" supplied, "udp://114.114.114.114:53" is used.') do |dns|
@@ -29,9 +29,9 @@ def parse_commandline
       opt[:pdns] << validate_dns_uri(dns)
     end
     o.on('-a', '--authentic-dns DNS',
-         'Specify a trustable DNS server, which SHOULD respond real result on querying polluted domains. ' +
+         'Specify a trustable DNS server, which SHOULD respond with real result on querying polluted domains. ' +
              'The address format is the same as "-l" option above. ' +
-             'Multiple "-p" options are accepted, when no "-p" supplied, "udp://208.67.220.220:5353" is used.') do |dns|
+             'Multiple "-a" options are accepted, when no "-a" supplied, "udp://208.67.220.220:5353" is used.') do |dns|
       opt[:adns] ||= []
       opt[:adns] << validate_dns_uri(dns)
     end

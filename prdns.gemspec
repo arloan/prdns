@@ -22,8 +22,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency 'async-dns', "~> 1.2"
-  spec.add_development_dependency "bundler", "~> 1.16"
-  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency 'bundler', "~> 2.0"
+  spec.add_development_dependency 'rake', "~> 13.0"
 
   spec.required_ruby_version = '>= 2.4.2'
 end

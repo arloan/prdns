@@ -25,9 +25,9 @@ PLATFORMS
 
 DEPENDENCIES
   async-dns
-  bundler (~> 1.16)
+  bundler (~> 2.0)
   prdns!
   rake (~> 13.0)
 
 BUNDLED WITH
-   1.16.2
+   2.1.4

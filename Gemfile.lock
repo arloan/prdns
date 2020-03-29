@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prdns (0.1.1)
+    prdns (0.1.2)
       async-dns (~> 1.2)
 
 GEM
